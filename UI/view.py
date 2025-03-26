@@ -1,5 +1,5 @@
 import flet as ft
-from flet_core import MainAxisAlignment
+from flet_core import MainAxisAlignment, page
 
 
 class View(ft.UserControl):
@@ -34,7 +34,7 @@ class View(ft.UserControl):
 
         self._dd = ft.Dropdown(label="Corso", width=800)
         self._controller.setDd()
-        self._btnIscritti = ft.ElevatedButton(text="Cerca iscritti", on_click=self._controller.handleIscritti)
+        self._btnIscritti = ft.ElevatedButton(text="Cerca iscritti", on_click=self._controller.handleIscritti, tooltip="Cerca gli studenti iscritti al corso selezionato")
         row1 = ft.Row([self._dd, self._btnIscritti], alignment=MainAxisAlignment.CENTER)
 
         self._txtMatricola = ft.TextField(label="Matricola")
@@ -42,7 +42,7 @@ class View(ft.UserControl):
         self._txtCognome = ft.TextField(label="Cognome")
         row2 = ft.Row([self._txtMatricola, self._txtNome, self._txtCognome], alignment=MainAxisAlignment.CENTER)
 
-        self._btnStudente = ft.ElevatedButton(text="Cerca studente", on_click=self._controller.handleCercaStudente)
+        self._btnStudente = ft.ElevatedButton(text="Cerca studente", on_click=self._controller.handleCercaStudente, tooltip="Verifica se c'è uno studente con la matricola inserita")
         self._btnCorsi = ft.ElevatedButton(text="Cerca corsi", on_click=self._controller.handleCercaCorsi)
         self._btnIscrivi = ft.ElevatedButton(text="Iscrivi", on_click=self._controller.handleIscrivi)
         row3 = ft.Row([self._btnStudente, self._btnCorsi, self._btnIscrivi], alignment=MainAxisAlignment.CENTER)
@@ -51,13 +51,6 @@ class View(ft.UserControl):
         self._page.add(row1, row2, row3, self._lv)
         self._page.update()
 
-        #ROW with some controls
-
-
-        # List View where the reply is printed
-        self.txt_result = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
-        self._page.controls.append(self.txt_result)
-        self._page.update()
 
     @property
     def controller(self):

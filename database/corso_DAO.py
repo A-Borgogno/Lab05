@@ -18,3 +18,13 @@ class corso_DAO:
             corsi.append(c)
         conn.close()
         return corsi
+
+    def getCorsiStudente(self, matricola):
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT c.codins, c.nome FROM iscrizione i, corso c WHERE i.codins = c.codins AND i.matricola = %s", (matricola,))
+        corsi = []
+        for row in cursor.fetchall():
+            corsi.append(f"{row[1]} ({row[0]})")
+        conn.close()
+        return corsi

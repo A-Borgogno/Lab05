@@ -13,6 +13,8 @@ class Model:
     def getIscrittiCorso(self, cod):
         return self._DAOStudenti.getStudentiCorso(cod)
 
-    def Studente(self, matricola):
-        s = self._DAOStudenti.getStudente(matricola)
-        return s.__str__()
+    def getStudente(self, matricola):
+        return self._DAOStudenti.getStudente(matricola)
+
+    def getCorsiStudente(self, studente):
+        return self._DAOCorsi.getCorsiStudente(studente.getMatricola())
