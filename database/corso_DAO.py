@@ -28,3 +28,21 @@ class corso_DAO:
             corsi.append(f"{row[1]} ({row[0]})")
         conn.close()
         return corsi
+
+    def getCorso(self, cod):
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM corso WHERE codins = %s", (cod,))
+        row = cursor.fetchone()
+        if row is None:
+            return None
+        c = Corso(row[0], row[1], row[2], row[3])
+        conn.close()
+        return c
+
+    def iscriviStudente(self, studente, corso):
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO iscrizione (matricola, codins) VALUES (%s, %s)", (studente.getMatricola(), corso.getCodice()))
+        conn.commit()
+        conn.close()

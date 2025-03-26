@@ -25,6 +25,13 @@ class Controller:
             self._view._lv.controls.append(ft.Text(i))
         self._view.update()
 
+    def handleReset(self, e):
+        self._view._lv.controls.clear()
+        self._view._txtMatricola.value = ""
+        self._view._txtNome.value = ""
+        self._view._txtCognome.value = ""
+        self._view.update()
+
     def handleCercaStudente(self, e):
         if self._view._txtMatricola.value == "":
             self._view.create_alert("Inserire una matricola!")
@@ -38,11 +45,12 @@ class Controller:
         self._view._txtNome.value = studente.getNome()
         self._view._txtCognome.value = studente.getCognome()
         self._view.update()
+        return True
 
     def handleCercaCorsi(self, e):
         self._view._lv.controls.clear()
-        self.handleCercaStudente(e)
-        if len(self._view._lv.controls) == 1:
+        err = self.handleCercaStudente(e)
+        if len(self._view._lv.controls) == 1 or err is None:
             return
         studente = self._model.getStudente(self._view._txtMatricola.value)
         corsi = self._model.getCorsiStudente(studente)
@@ -52,4 +60,12 @@ class Controller:
         self._view.update()
 
     def handleIscrivi(self, e):
-        pass
+        self._view._lv.controls.clear()
+        err = self.handleCercaStudente(e)
+        if len(self._view._lv.controls) == 1 or err is None:
+            return
+        studente = self._model.getStudente(self._view._txtMatricola.value)
+        corso = self._model.getCorso(self._view._dd.value)
+        self._model.iscriviStudente(studente, corso)
+        self._view._lv.controls.append(ft.Text(f"Studente {studente.getCognome()} {studente.getNome()} ({studente.getMatricola()}) iscritto al corso {corso.getNome()}!", size=20, color='green'))
+        self._view.update()

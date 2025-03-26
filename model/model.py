@@ -18,3 +18,9 @@ class Model:
 
     def getCorsiStudente(self, studente):
         return self._DAOCorsi.getCorsiStudente(studente.getMatricola())
+
+    def getCorso(self, cod):
+        return self._DAOCorsi.getCorso(cod)
+
+    def iscriviStudente(self, studente, corso):
+        self._DAOCorsi.iscriviStudente(studente, corso)

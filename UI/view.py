@@ -6,6 +6,7 @@ class View(ft.UserControl):
     def __init__(self, page: ft.Page):
         super().__init__()
         # page stuff
+        self._btnReset = None
         self._lv = None
         self._btnIscrivi = None
         self._btnCorsi = None
@@ -40,10 +41,11 @@ class View(ft.UserControl):
         self._txtMatricola = ft.TextField(label="Matricola")
         self._txtNome = ft.TextField(label="Nome")
         self._txtCognome = ft.TextField(label="Cognome")
-        row2 = ft.Row([self._txtMatricola, self._txtNome, self._txtCognome], alignment=MainAxisAlignment.CENTER)
+        self._btnReset = ft.IconButton(icon=ft.icons.ARROW_BACK, on_click=self._controller.handleReset, tooltip="Reset matricola, nome e cognome")
+        row2 = ft.Row([self._txtMatricola, self._txtNome, self._txtCognome, self._btnReset], alignment=MainAxisAlignment.CENTER)
 
         self._btnStudente = ft.ElevatedButton(text="Cerca studente", on_click=self._controller.handleCercaStudente, tooltip="Verifica se c'è uno studente con la matricola inserita")
-        self._btnCorsi = ft.ElevatedButton(text="Cerca corsi", on_click=self._controller.handleCercaCorsi)
+        self._btnCorsi = ft.ElevatedButton(text="Cerca corsi", on_click=self._controller.handleCercaCorsi, tooltip="Cerca i corsi a cui è iscritto lo studente selezionato")
         self._btnIscrivi = ft.ElevatedButton(text="Iscrivi", on_click=self._controller.handleIscrivi)
         row3 = ft.Row([self._btnStudente, self._btnCorsi, self._btnIscrivi], alignment=MainAxisAlignment.CENTER)
         
